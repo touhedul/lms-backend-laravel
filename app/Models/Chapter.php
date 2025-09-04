@@ -9,4 +9,11 @@ class Chapter extends Model
 {
     /** @use HasFactory<\Database\Factories\ChapterFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'course_id',
+        'sort_order',
+        'status',
+    ];
 }

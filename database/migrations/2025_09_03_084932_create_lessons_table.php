@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->foreignId('chapter_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_free_preview')->default(false);
+            $table->integer('duration')->nullable();
+            $table->string('video')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('sort_order')->default(0);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

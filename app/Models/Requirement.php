@@ -9,4 +9,10 @@ class Requirement extends Model
 {
     /** @use HasFactory<\Database\Factories\RequirementFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'course_id',
+        'text',
+        'sort_order',
+    ];
 }

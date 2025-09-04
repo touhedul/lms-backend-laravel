@@ -9,4 +9,9 @@ class Level extends Model
 {
     /** @use HasFactory<\Database\Factories\LevelFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'status',
+    ];
 }

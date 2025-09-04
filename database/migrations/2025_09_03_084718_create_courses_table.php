@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('level_id')->constrained()->onDelete('cascade');
+            $table->foreignId('language_id')->constrained()->onDelete('cascade');
+            $table->text('description');
+            $table->decimal('price', 8, 2);
+            $table->decimal('cross_price', 8, 2)->nullable();
+            $table->boolean('status')->default(true);
+            $table->boolean('is_featured')->default(false);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

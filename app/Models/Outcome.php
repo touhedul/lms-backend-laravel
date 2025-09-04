@@ -9,4 +9,10 @@ class Outcome extends Model
 {
     /** @use HasFactory<\Database\Factories\OutcomeFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'course_id',
+        'text',
+        'sort_order',
+    ];
 }
