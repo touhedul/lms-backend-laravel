@@ -13,4 +13,5 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::apiResource('courses', CourseController::class);
+    Route::get('course-metadata', [CourseController::class, 'metadata']);
 });

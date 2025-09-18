@@ -23,6 +23,12 @@ class UpdateCourseRequest extends FormRequest
     {
         return [
             'title' => 'sometimes|required|string|max:255',
+            'category_id' => 'required',
+            'level_id' => 'required',
+            'language_id' => 'required',
+            'description' => 'nullable|string',
+            'price' => 'required',
+            'cross_price' => 'nullable',
         ];
     }
 }

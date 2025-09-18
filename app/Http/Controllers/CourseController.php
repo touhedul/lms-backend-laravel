@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Category;
 use App\Models\Course;
+use App\Models\Language;
+use App\Models\Level;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -45,5 +48,14 @@ class CourseController extends Controller
         $course->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function metadata()
+    {
+        return [
+            'categories' => Category::all(),
+            'levels' => Level::all(),
+            'languages' => Language::all(),
+        ];
     }
 }
