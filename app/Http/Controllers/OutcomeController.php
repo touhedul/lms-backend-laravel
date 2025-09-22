@@ -5,23 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Outcome;
 use App\Http\Requests\StoreOutcomeRequest;
 use App\Http\Requests\UpdateOutcomeRequest;
+use Illuminate\Http\Request;
 
 class OutcomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Outcome::where('course_id', $request->query('course_id'))->get();
     }
 
     /**
@@ -29,7 +22,8 @@ class OutcomeController extends Controller
      */
     public function store(StoreOutcomeRequest $request)
     {
-        //
+        $outcome = Outcome::create($request->validated());
+        return $outcome;
     }
 
     /**
@@ -37,15 +31,7 @@ class OutcomeController extends Controller
      */
     public function show(Outcome $outcome)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Outcome $outcome)
-    {
-        //
+        return $outcome;
     }
 
     /**
@@ -53,7 +39,8 @@ class OutcomeController extends Controller
      */
     public function update(UpdateOutcomeRequest $request, Outcome $outcome)
     {
-        //
+        $outcome->update($request->validated());
+        return $outcome;
     }
 
     /**
@@ -61,6 +48,7 @@ class OutcomeController extends Controller
      */
     public function destroy(Outcome $outcome)
     {
-        //
+        $outcome->delete();
+        return response()->noContent();
     }
 }
