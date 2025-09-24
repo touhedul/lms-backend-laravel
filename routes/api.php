@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\OutcomeController;
+use App\Http\Controllers\RequirementController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -15,5 +16,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('outcomes', OutcomeController::class);
+    Route::apiResource('requirements', RequirementController::class);
     Route::get('course-metadata', [CourseController::class, 'metadata']);
 });

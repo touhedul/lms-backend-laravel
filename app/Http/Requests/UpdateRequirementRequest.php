@@ -11,7 +11,7 @@ class UpdateRequirementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateRequirementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'course_id' => 'sometimes|exists:courses,id',
+            'text' => 'sometimes|string|max:255',
+            'sort_order' => 'sometimes|integer',
         ];
     }
 }
