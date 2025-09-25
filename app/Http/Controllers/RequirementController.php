@@ -14,7 +14,7 @@ class RequirementController extends Controller
      */
     public function index(Request $request)
     {
-        return Requirement::where('course_id', $request->query('course_id'))->get();
+        return Requirement::where('course_id', $request->query('course_id'))->orderBy('sort_order')->get();
     }
 
     /**
@@ -49,6 +49,19 @@ class RequirementController extends Controller
     public function destroy(Requirement $requirement)
     {
         $requirement->delete();
+        return response()->noContent();
+    }
+
+
+    public function updateOrder(Request $request)
+    {
+         foreach ($request->requirements as $index => $requirementData) {
+            $requirement = Requirement::find($requirementData['id']);
+            if ($requirement) {
+                $requirement->sort_order = $index;
+                $requirement->save();
+            }
+        }
         return response()->noContent();
     }
 }

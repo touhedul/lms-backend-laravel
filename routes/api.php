@@ -16,6 +16,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('outcomes', OutcomeController::class);
+    Route::post('/outcome-order', [OutcomeController::class, 'updateOrder']);
     Route::apiResource('requirements', RequirementController::class);
+    Route::post('/requirement-order', [RequirementController::class, 'updateOrder']);
     Route::get('course-metadata', [CourseController::class, 'metadata']);
 });

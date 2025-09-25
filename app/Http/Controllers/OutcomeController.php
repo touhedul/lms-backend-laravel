@@ -14,7 +14,7 @@ class OutcomeController extends Controller
      */
     public function index(Request $request)
     {
-        return Outcome::where('course_id', $request->query('course_id'))->get();
+        return Outcome::where('course_id', $request->query('course_id'))->orderBy('sort_order')->get();
     }
 
     /**
@@ -49,6 +49,19 @@ class OutcomeController extends Controller
     public function destroy(Outcome $outcome)
     {
         $outcome->delete();
+        return response()->noContent();
+    }
+
+
+    public function updateOrder(Request $request)
+    {
+         foreach ($request->outcomes as $index => $outcomeData) {
+            $outcome = Outcome::find($outcomeData['id']);
+            if ($outcome) {
+                $outcome->sort_order = $index;
+                $outcome->save();
+            }
+        }
         return response()->noContent();
     }
 }
