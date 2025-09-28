@@ -23,4 +23,9 @@ class Course extends Model
         'is_featured',
         'image',
     ];
+
+    public function getImageAttribute()
+    {
+         return $this->attributes['image'] ? asset('storage/' . $this->attributes['image']) : null;
+    }
 }

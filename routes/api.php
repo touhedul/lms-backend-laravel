@@ -14,6 +14,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::post('courses/{course}/upload-image', [CourseController::class, 'uploadImage']);
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('outcomes', OutcomeController::class);
     Route::post('/outcome-order', [OutcomeController::class, 'updateOrder']);

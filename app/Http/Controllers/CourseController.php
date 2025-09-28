@@ -58,4 +58,17 @@ class CourseController extends Controller
             'languages' => Language::all(),
         ];
     }
+
+    public function uploadImage(Request $request, Course $course)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $path = $request->file('image')->store('course-images','public');
+
+        $course->update(['image' => $path]);
+
+        return response()->json($course);
+    }
 }
