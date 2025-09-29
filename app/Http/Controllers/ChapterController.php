@@ -5,23 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Chapter;
 use App\Http\Requests\StoreChapterRequest;
 use App\Http\Requests\UpdateChapterRequest;
+use Illuminate\Http\Request;
 
 class ChapterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Chapter::where('course_id', $request->query('course_id'))->orderBy('sort_order')->get();
     }
 
     /**
@@ -29,7 +22,8 @@ class ChapterController extends Controller
      */
     public function store(StoreChapterRequest $request)
     {
-        //
+        $chapter = Chapter::create($request->validated());
+        return $chapter;
     }
 
     /**
@@ -37,15 +31,7 @@ class ChapterController extends Controller
      */
     public function show(Chapter $chapter)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Chapter $chapter)
-    {
-        //
+        return $chapter;
     }
 
     /**
@@ -53,7 +39,8 @@ class ChapterController extends Controller
      */
     public function update(UpdateChapterRequest $request, Chapter $chapter)
     {
-        //
+        $chapter->update($request->validated());
+        return $chapter;
     }
 
     /**
@@ -61,6 +48,20 @@ class ChapterController extends Controller
      */
     public function destroy(Chapter $chapter)
     {
-        //
+        $chapter->delete();
+        return response()->noContent();
+    }
+
+
+    public function updateOrder(Request $request)
+    {
+         foreach ($request->chapters as $index => $chapterData) {
+            $chapter = Chapter::find($chapterData['id']);
+            if ($chapter) {
+                $chapter->sort_order = $index;
+                $chapter->save();
+            }
+        }
+        return response()->noContent();
     }
 }
