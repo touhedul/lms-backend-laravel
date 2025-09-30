@@ -31,6 +31,7 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+        $course->load('chapters');
         return $course;
     }
 

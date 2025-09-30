@@ -28,4 +28,9 @@ class Course extends Model
     {
          return $this->attributes['image'] ? asset('storage/' . $this->attributes['image']) : null;
     }
+
+    public function chapters()
+    {
+         return $this->hasMany(Chapter::class)->orderBy('sort_order');
+    }
 }
