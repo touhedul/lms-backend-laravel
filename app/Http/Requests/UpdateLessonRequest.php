@@ -11,7 +11,7 @@ class UpdateLessonRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'sometimes|string|max:255',
+            'chapter_id' => 'sometimes|exists:chapters,id',
+            'is_free_preview' => 'sometimes|boolean',
+            'duration' => 'sometimes|string',
+            'video' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'sort_order' => 'sometimes|integer',
+            'status' => 'sometimes|string',
         ];
     }
 }

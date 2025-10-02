@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\OutcomeController;
 use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\LessonController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -27,5 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('chapters', ChapterController::class);
     Route::post('/chapter-order', [ChapterController::class, 'updateOrder']);
-    
+
+    Route::apiResource('lessons', LessonController::class);
+    Route::post('/lesson-order', [LessonController::class, 'updateOrder']);
+
 });

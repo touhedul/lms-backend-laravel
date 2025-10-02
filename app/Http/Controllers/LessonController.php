@@ -5,23 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
+use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Lesson::where('chapter_id', $request->query('chapter_id'))->orderBy('sort_order')->get();
     }
 
     /**
@@ -29,7 +22,8 @@ class LessonController extends Controller
      */
     public function store(StoreLessonRequest $request)
     {
-        //
+        $lesson = Lesson::create($request->validated());
+        return $lesson;
     }
 
     /**
@@ -37,15 +31,7 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Lesson $lesson)
-    {
-        //
+        return $lesson;
     }
 
     /**
@@ -53,7 +39,8 @@ class LessonController extends Controller
      */
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
-        //
+        $lesson->update($request->validated());
+        return $lesson;
     }
 
     /**
@@ -61,6 +48,20 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        //
+        $lesson->delete();
+        return response()->noContent();
+    }
+
+
+    public function updateOrder(Request $request)
+    {
+         foreach ($request->lessons as $index => $lessonData) {
+            $lesson = Lesson::find($lessonData['id']);
+            if ($lesson) {
+                $lesson->sort_order = $index;
+                $lesson->save();
+            }
+        }
+        return response()->noContent();
     }
 }
