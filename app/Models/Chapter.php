@@ -16,4 +16,9 @@ class Chapter extends Model
         'sort_order',
         'status',
     ];
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }
