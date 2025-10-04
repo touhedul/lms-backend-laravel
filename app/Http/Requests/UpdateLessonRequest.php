@@ -25,9 +25,9 @@ class UpdateLessonRequest extends FormRequest
             'title' => 'sometimes|string|max:255',
             'chapter_id' => 'sometimes|exists:chapters,id',
             'is_free_preview' => 'sometimes|boolean',
-            'duration' => 'sometimes|string',
+            'duration' => 'nullable',
             'video' => 'sometimes|string',
-            'description' => 'sometimes|string',
+            'description' => 'nullable|string',
             'sort_order' => 'sometimes|integer',
             'status' => 'sometimes|string',
         ];
