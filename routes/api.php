@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('chapters', ChapterController::class);
     Route::post('/chapter-order', [ChapterController::class, 'updateOrder']);
 
+    Route::post('lessons/{lesson}/upload-video', [LessonController::class, 'uploadVideo']);
     Route::apiResource('lessons', LessonController::class);
     Route::post('/lesson-order', [LessonController::class, 'updateOrder']);
 

@@ -64,4 +64,17 @@ class LessonController extends Controller
         }
         return response()->noContent();
     }
+
+    public function uploadVideo(Request $request, Lesson $lesson)
+    {
+        $request->validate([
+            'video' => 'required|mimes:mp4|max:20480',
+        ]);
+
+        $path = $request->file('video')->store('lesson-video','public');
+
+        $lesson->update(['video' => $path]);
+
+        return response()->json($lesson);
+    }
 }

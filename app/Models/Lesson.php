@@ -20,4 +20,9 @@ class Lesson extends Model
         'sort_order',
         'status',
     ];
+
+    public function getVideoAttribute()
+    {
+         return $this->attributes['video'] ? asset('storage/' . $this->attributes['video']) : null;
+    }
 }
