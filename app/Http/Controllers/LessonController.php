@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lesson;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
+use App\Models\Chapter;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -55,14 +56,16 @@ class LessonController extends Controller
 
     public function updateOrder(Request $request)
     {
-         foreach ($request->lessons as $index => $lessonData) {
+        foreach ($request->lessons as $index => $lessonData) {
             $lesson = Lesson::find($lessonData['id']);
+            $chapterId = $lesson->chapter_id;
             if ($lesson) {
                 $lesson->sort_order = $index;
                 $lesson->save();
             }
         }
-        return response()->noContent();
+        $chapter = Chapter::where('id',$chapterId)->with('lessons')->first();
+        return $chapter;
     }
 
     public function uploadVideo(Request $request, Lesson $lesson)
