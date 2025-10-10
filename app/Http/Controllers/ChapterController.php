@@ -40,6 +40,7 @@ class ChapterController extends Controller
     public function update(UpdateChapterRequest $request, Chapter $chapter)
     {
         $chapter->update($request->validated());
+        $chapter->load('lessons');
         return $chapter;
     }
 
@@ -55,13 +56,16 @@ class ChapterController extends Controller
 
     public function updateOrder(Request $request)
     {
+        $courseId = '';
          foreach ($request->chapters as $index => $chapterData) {
             $chapter = Chapter::find($chapterData['id']);
+            $courseId = $chapter->course_id;
             if ($chapter) {
                 $chapter->sort_order = $index;
                 $chapter->save();
             }
         }
-        return response()->noContent();
+
+        return Chapter::where('course_id', $courseId)->with('lessons')->orderBy('sort_order')->get();
     }
 }
