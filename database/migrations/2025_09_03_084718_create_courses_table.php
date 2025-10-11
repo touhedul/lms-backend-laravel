@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2)->nullable();
             $table->decimal('cross_price', 8, 2)->nullable();
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(false);
             $table->boolean('is_featured')->default(false);
             $table->string('image')->nullable();
             $table->timestamps();

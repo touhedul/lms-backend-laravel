@@ -17,6 +17,8 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::post('courses/{course}/upload-image', [CourseController::class, 'uploadImage']);
+    Route::post('courses/publish-unpublish/{course}', [CourseController::class, 'publishUnpublish']);
+    Route::get('courses/my', [CourseController::class, 'myCourses']);
     Route::apiResource('courses', CourseController::class);
     Route::get('course-metadata', [CourseController::class, 'metadata']);
 

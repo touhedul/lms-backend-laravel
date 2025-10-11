@@ -72,4 +72,15 @@ class CourseController extends Controller
 
         return response()->json($course);
     }
+
+    public function publishUnpublish(Course $course)
+    {
+        $course->update(['status' => !$course->status]);
+        return response()->json($course);
+    }
+
+    public function myCourses()
+    {
+         return Course::where('user_id',auth()->id())->with('level')->get();
+    }
 }
