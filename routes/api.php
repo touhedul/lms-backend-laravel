@@ -13,7 +13,10 @@ use App\Http\Controllers\LessonController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/categories', [HomeController::class, 'categories']);
+Route::get('/levels', [HomeController::class, 'levels']);
+Route::get('/languages', [HomeController::class, 'languages']);
 Route::get('/featured-courses', [HomeController::class, 'featuredCourses']);
+Route::get('/all-courses', [HomeController::class, 'allCourses']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
