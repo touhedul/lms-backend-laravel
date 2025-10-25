@@ -50,6 +50,12 @@ class HomeController extends Controller
                 ->when($request->language_ids, function($query) use ($request){
                         $query->whereIn('language_id', explode(',', $request->language_ids));
                 })
+                ->when($request->keyword,function($q) use ($request){
+                    $q->where('title', 'like', '%' . $request->keyword . '%');
+                })
+                ->when($request->sort,function($q) use ($request){
+                    $q->orderBy('created_at', $request->sort);
+                })
                 ->get();
     }
 }
