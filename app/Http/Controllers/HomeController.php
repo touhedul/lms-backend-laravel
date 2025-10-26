@@ -58,4 +58,11 @@ class HomeController extends Controller
                 })
                 ->get();
     }
+
+    public function course(Course $course)
+    {
+        $course->load('chapters.lessons','category','level','language','outcomes','requirements');
+
+        return $course;
+    }
 }

@@ -17,6 +17,7 @@ Route::get('/levels', [HomeController::class, 'levels']);
 Route::get('/languages', [HomeController::class, 'languages']);
 Route::get('/featured-courses', [HomeController::class, 'featuredCourses']);
 Route::get('/all-courses', [HomeController::class, 'allCourses']);
+Route::get('/course/{course}', [HomeController::class, 'course']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
