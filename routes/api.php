@@ -42,4 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('lessons', LessonController::class);
     Route::post('/lesson-order', [LessonController::class, 'updateOrder']);
 
+    Route::post('/enroll/{course}',[HomeController::class,'enroll']);
+
 });

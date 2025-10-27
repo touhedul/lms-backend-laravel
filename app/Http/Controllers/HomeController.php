@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Language;
 use App\Models\Level;
 use Illuminate\Http\Request;
@@ -64,5 +65,17 @@ class HomeController extends Controller
         $course->load('chapters.lessons','category','level','language','outcomes','requirements');
 
         return $course;
+    }
+
+    public function enroll(Course $course)
+    {
+        $count = Enrollment::where('user_id', auth()->id())->where('course_id', $course->id)->count();
+        if ($count > 0) {
+            return response()->json(['message' => 'You are already enrolled in this course'], 400);
+        }
+        return Enrollment::create([
+            'user_id' => auth()->id(),
+            'course_id' => $course->id
+         ]);
     }
 }

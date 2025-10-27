@@ -57,4 +57,6 @@ class Course extends Model
     {
          return $this->belongsTo(Language::class);
     }
+
+    
 }
