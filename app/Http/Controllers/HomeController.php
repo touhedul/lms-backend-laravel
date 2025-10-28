@@ -41,28 +41,28 @@ class HomeController extends Controller
     {
         return
             Course::query()
-                ->where('status',1)
-                ->when($request->category_ids, function($query) use ($request){
-                        $query->whereIn('category_id', explode(',', $request->category_ids));
-                })
-                ->when($request->level_ids, function($query) use ($request){
-                        $query->whereIn('level_id', explode(',', $request->level_ids));
-                })
-                ->when($request->language_ids, function($query) use ($request){
-                        $query->whereIn('language_id', explode(',', $request->language_ids));
-                })
-                ->when($request->keyword,function($q) use ($request){
-                    $q->where('title', 'like', '%' . $request->keyword . '%');
-                })
-                ->when($request->sort,function($q) use ($request){
-                    $q->orderBy('created_at', $request->sort);
-                })
-                ->get();
+            ->where('status', 1)
+            ->when($request->category_ids, function ($query) use ($request) {
+                $query->whereIn('category_id', explode(',', $request->category_ids));
+            })
+            ->when($request->level_ids, function ($query) use ($request) {
+                $query->whereIn('level_id', explode(',', $request->level_ids));
+            })
+            ->when($request->language_ids, function ($query) use ($request) {
+                $query->whereIn('language_id', explode(',', $request->language_ids));
+            })
+            ->when($request->keyword, function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->keyword . '%');
+            })
+            ->when($request->sort, function ($q) use ($request) {
+                $q->orderBy('created_at', $request->sort);
+            })
+            ->get();
     }
 
     public function course(Course $course)
     {
-        $course->load('chapters.lessons','category','level','language','outcomes','requirements');
+        $course->load('chapters.lessons', 'category', 'level', 'language', 'outcomes', 'requirements');
 
         return $course;
     }
@@ -76,6 +76,17 @@ class HomeController extends Controller
         return Enrollment::create([
             'user_id' => auth()->id(),
             'course_id' => $course->id
-         ]);
+        ]);
+    }
+
+    public function enrollments()
+    {
+        return Enrollment::where('user_id', auth()->id())->with('course', 'course.level')->get();
+    }
+
+    public function watchCourse(Course $course)
+    {
+        $course->load('chapters.lessons');
+        return $course;
     }
 }
