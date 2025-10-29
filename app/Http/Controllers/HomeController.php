@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Activity;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Language;
@@ -87,6 +88,26 @@ class HomeController extends Controller
     public function watchCourse(Course $course)
     {
         $course->load('chapters.lessons');
-        return $course;
+
+        $activityCount = Activity::where('user_id', auth()->id())->where('course_id', $course->id)->count();
+
+        $activeLesson = collect();
+        if ($activityCount == 0) {
+            Activity::create([
+                'course_id' => $course->id,
+                'user_id' => auth()->id(),
+                'chapter_id' => $course->chapters?->first()?->id,
+                'lesson_id' => $course->chapters?->first()?->lessons?->first()?->id,
+                'is_last_watched' => true,
+            ]);
+            $activeLesson = $course->chapters?->first()?->lessons?->first();
+        }else{
+            $activeLesson = $course->chapters?->first()?->lessons?->first();
+        }
+
+        return [
+            'course' => $course,
+            'activeLesson' => $activeLesson
+        ];
     }
 }
